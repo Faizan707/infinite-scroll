@@ -1,0 +1,56 @@
+/* App Container */
+.App {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+}
+
+/* List Styles */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+li p {
+  font-size: 14px;
+}
+
+/* Loading Styles */
+h1 {
+  display: block;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Scroll Limit Reached Styles */
+p {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
