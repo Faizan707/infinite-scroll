@@ -1,52 +1,33 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-
+import React, {  useState } from "react";
+import useInfiniteScroll from "./hooks/useinfiniteScroll"; // Adjust the import path as needed
+import './App.css'
 function App() {
-  const [data, setData] = useState([]);
+  const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const handelInfiniteScroll = async () => {
-    
-    try {
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 1 >=
-        document.documentElement.scrollHeight
-      ) {
-        setLoading(true);
-        setPage((prev) => prev + 1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
+  // Define the custom function to fetch data from the API
+  const fetchData = async () => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`
+    );
+    const newData = await response.json();
+    setItems([...items, ...newData]);
+    setPage(page + 1);
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handelInfiniteScroll);
-    return () => window.removeEventListener("scroll", handelInfiniteScroll);
-  }, []);
-
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts?_limit=9&_page=${page}`)
-      .then((response) => response.json())
-      .then((res) => {
-        setData([...data, ...res]);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [page]);
+  // Call the useInfiniteScroll hook with your custom function and items state
+  useInfiniteScroll(fetchData, items);
 
   return (
     <div className="App">
       <ul>
-        {data.map((post) => (
-          <li key={post.id}>
-            {post.title.substr(0,150)}
-            <p>{post.body.substr(0,15)}</p>
+        {items.map((item) => (
+          <li key={item.id}>{item.title}
+          
+          <p>{item.body}</p>
           </li>
         ))}
       </ul>
-      <h1>{loading}</h1>
     </div>
   );
 }
